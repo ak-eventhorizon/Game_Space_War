@@ -1,0 +1,147 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    
+    /* Звездное небо на фоне */
+    /* КАК ВАРИАНТ - сделать анимированный фон с бесконечным циклом */
+    background-color:black;
+    background-image:
+    radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+    radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+    radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px),
+    radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 2px, transparent 30px);
+    background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
+    background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+}
+
+.interface {
+    width: 600px;
+    height: 40px;
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.interface .level {
+    width: 140px;
+    display: flex;
+    justify-content: space-around;
+    color: lightgray;
+}
+
+.interface .score {
+    width: 160px;
+    display: flex;
+    justify-content: space-between;
+    color: lightgray;
+}
+
+.interface .button {
+    width: 140px;
+    text-align: center;
+    border-radius: 15px;
+    cursor: pointer;
+    background-color: lightgrey
+}
+
+.interface .button:hover {
+    background-color: darkgrey;
+}
+
+.interface .button:active {
+    background-color: grey;
+}
+
+.field_wrapper {
+    width: 600px;
+    display: flex;
+    justify-content: center;
+}
+
+.line {
+    display: flex;
+}
+
+.cell {
+    width: 20px;
+    height: 20px;
+    /* border: 1px solid lightgray;*/ /*отображение сетки игрового поля */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*  *****Фрагменты корабля*****  */
+
+.block2 {
+    background-image: url(img/ship/block2.png);
+}
+
+.block4 {
+    background-image: url(img/ship/block4.png);
+}
+
+.block5 {
+    background-image: url(img/ship/block5.png);
+}
+
+.block6 {
+    background-image: url(img/ship/block6.png);
+}
+
+.block7 {
+    background-image: url(img/ship/block7.png);
+}
+
+.block8 {
+    background-image: url(img/ship/block8.png);
+}
+
+.block9 {
+    background-image: url(img/ship/block9.png);
+}
+
+.block10 {
+    background-image: url(img/ship/block10.png);
+}
+
+
+/*  *****Выстрел*****  */
+
+.bullet {
+    background-image: url(img/ship/bullet.png);
+}
+
+/*  *****Зерг*****  */
+
+.z-1 {
+    background-image: url(img/zerg/z-1.png);
+}
+
+.z-2 {
+    background-image: url(img/zerg/z-2.png);
+}
+
+.z-3 {
+    background-image: url(img/zerg/z-3.png);
+}
+
+.z-4 {
+    background-image: url(img/zerg/z-4.png);
+}
+
+.z-5 {
+    background-image: url(img/zerg/z-5.png);
+}
+
+.zbullet {
+   background-image: url(img/zerg/zbullet.png); 
+}

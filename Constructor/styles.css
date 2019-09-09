@@ -1,0 +1,90 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper {
+    width: 600px;
+    float: left;
+}
+
+.interface {
+    width: 600px;
+    height: 40px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.field_wrapper {
+    width: 600px;
+    display: flex;
+    justify-content: center;
+}
+
+#output {
+    float: left;
+    width: 400px;
+    min-height: 20px;
+    margin-top: 40px;
+    padding-left: 10px;
+    background-color: #f2f2f2;
+    font-size: 14px;
+}
+
+#button {
+    height: 24px;
+    width: 30px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 20px;
+}
+
+.line {
+    display: flex;
+}
+
+.cell {
+    width: 18px;
+    height: 18px;
+    border: 1px solid lightgray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cell:hover {
+    cursor: pointer;
+}
+
+.grey {
+    background-color: #f2f2f2;
+}
+
+.red {
+    background-color: #ffe6e6;
+}
+
+/*  *****Зерг*****  */
+
+.z-1 {
+    background-image: url(img/zerg/z-1.png);
+}
+
+.z-2 {
+    background-image: url(img/zerg/z-2.png);
+}
+
+.z-3 {
+    background-image: url(img/zerg/z-3.png);
+}
+
+.z-4 {
+    background-image: url(img/zerg/z-4.png);
+}
+
+.z-5 {
+    background-image: url(img/zerg/z-5.png);
+}
