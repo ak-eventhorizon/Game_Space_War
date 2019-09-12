@@ -20,6 +20,11 @@
     background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
 }
 
+.wrapper {
+    /* для прижатия кнопок к низу */
+    position: relative;
+}
+
 .interface {
     width: 600px;
     height: 40px;
@@ -154,13 +159,25 @@
 	max-width: 600px;
     margin: auto;
     text-align: center;
+    
+    /* прижатие кнопок к низу */
+    position: absolute;
+    bottom: 0;
 }
 
-/*media query breakpoint - smartphones*/
-@media (max-width: 480px) {
+/*media query breakpoint - sensor screen*/
+@media (pointer:coarse) {
 
     .btn-block {
         display: block;
+        width: 100%;
+    }
+
+    .interface {
+        width: 100%;
+    }
+
+    .field_wrapper {
         width: 100%;
     }
 }
@@ -179,7 +196,7 @@
 
     font: 40px bold arial, sans-serif;
     color: black;
-    line-height: 75px;
+    line-height: 200px;
 }
 
 .btn-block > div:active {
