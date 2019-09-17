@@ -20,6 +20,11 @@
     background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
 }
 
+.wrapper {
+    /* для прижатия кнопок к низу */
+    position: relative;
+}
+
 .interface {
     width: 600px;
     height: 40px;
@@ -49,15 +54,14 @@
     text-align: center;
     border-radius: 15px;
     cursor: pointer;
-    background-color: lightgrey
-}
-
-.interface .button:hover {
-    background-color: darkgrey;
+    background-color: lightgrey;
+    box-shadow: 2px 2px 2px #a4a4a4;
+    text-shadow: 1px 1px 2px #a4a4a4;
 }
 
 .interface .button:active {
-    background-color: grey;
+    box-shadow: 1px 1px 2px #a4a4a4;
+    transform: translate(1px, 1px);
 }
 
 .field_wrapper {
@@ -144,4 +148,71 @@
 
 .zbullet {
    background-image: url(img/zerg/zbullet.png); 
+}
+
+
+
+/* Блок кнопок для управления с мобильных устройств */
+
+.btn-block {
+    display: none;
+	max-width: 600px;
+    margin: auto;
+    text-align: center;
+    
+    /* прижатие кнопок к низу */
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 150px;
+}
+
+/*media query breakpoint - sensor screen*/
+@media (pointer:coarse) {
+
+    .btn-block {
+        display: block;
+        width: 100%;
+    }
+
+    .interface {
+        width: 100%;
+    }
+
+    .field_wrapper {
+        width: 100%;
+    }
+}
+
+.btn-block > div {
+    display: inline-block;
+    overflow: hidden;
+    margin: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 25px;
+    
+    background-color: lightgray;
+    box-shadow: 3px 3px 2px #a4a4a4;
+    text-shadow: 1px 1px 2px #a4a4a4;
+
+    font: 40px bold arial, sans-serif;
+    color: black;
+    line-height: 200px;
+}
+
+.btn-block > div:active {
+    box-shadow: 2px 2px 2px #a4a4a4;
+    transform: translate(1px, 1px);
+}
+
+.btn-left {
+    width: 20%;
+}
+
+.btn-space {
+    width: 45%;
+}
+
+.btn-right {
+    width: 20%;
 }

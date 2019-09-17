@@ -668,12 +668,14 @@ var game = {
         clearInterval(I2);
         clearInterval(I3);
         document.removeEventListener('keydown', controls);
+        document.removeEventListener('click', controlSensor);
     },
     
     //--OK - возобновление игры из паузы, старт анимаций
     unPause: function() {
         // включение обработчика событий управления и интервалов движения
         document.addEventListener('keydown', controls);
+        document.addEventListener('click', controlSensor);
         I1 = setInterval(bullet.move, BULLET_SPEED); 
         I2 = setInterval(zbullet.move, ZBULLET_SPEED);
         I3 = setInterval(zerg.trajectory, Z_SPEED);
@@ -758,6 +760,22 @@ var game = {
 }
 
 
+//--OK реакция на нажатие сенсорных кнопок
+
+function controlSensor(key){
+
+    switch (key.srcElement.className) {
+        case 'btn-left': // Сенсорная кнопка влево
+            ship.moveLeft();
+            break;
+        case 'btn-right': // Сенсорная кнопка вправо
+            ship.moveRight();
+            break;
+        case 'btn-space': // Сенсорная кнопка пробел
+            ship.fire();
+            break;        
+    }
+}
 
 //--OK реакция на нажатие кнопок
 function controls(key) {
