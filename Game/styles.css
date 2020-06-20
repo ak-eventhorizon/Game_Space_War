@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 .main {
@@ -8,8 +9,7 @@
     justify-content: center;
     height: 100vh;
     
-    /* Звездное небо на фоне */
-    /* КАК ВАРИАНТ - сделать анимированный фон с бесконечным циклом */
+    /* Звездное небо на фоне  - ЗАМЕНИТЬ JS МОДУЛЕМ*/
     background-color:black;
     background-image:
     radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
@@ -20,37 +20,31 @@
     background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
 }
 
-.wrapper {
-    /* для прижатия кнопок к низу */
-    position: relative;
-}
-
 .interface {
-    width: 600px;
     height: 40px;
-    display:flex;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.3fr;
+    grid-gap: 5px;
+
     align-items: center;
-    justify-content: space-between;
     font-size: 25px;
     font-weight: 600;
 }
 
 .interface .level {
-    width: 140px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     color: lightgray;
 }
 
 .interface .score {
-    width: 160px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     color: lightgray;
 }
 
 .interface .button {
-    width: 140px;
     text-align: center;
     border-radius: 15px;
     cursor: pointer;
@@ -64,24 +58,24 @@
     transform: translate(1px, 1px);
 }
 
-.field_wrapper {
-    width: 600px;
-    display: flex;
-    justify-content: center;
-}
-
 .line {
     display: flex;
 }
 
 .cell {
-    width: 20px;
-    height: 20px;
-    /* border: 1px solid lightgray;*/ /*отображение сетки игрового поля */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    /* высота экрана минус высота интерфейса поделить на количество ячеек в высоту*/
+    width: calc((100vmin - 40px) / 32);
+    height: calc((100vmin - 40px) / 32);
+
+    /* border: 1px solid lightgray; */
+
+    background-size: 104%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
 }
+
+
 
 /*  *****Фрагменты корабля*****  */
 
@@ -154,36 +148,36 @@
 
 /* Блок кнопок для управления с мобильных устройств */
 
-.btn-block {
+/* .btn-block {
     display: none;
 	max-width: 600px;
     margin: auto;
     text-align: center;
     
-    /* прижатие кнопок к низу */
+    /* прижатие кнопок к низу  * /
     position: absolute;
     bottom: 0;
     margin-bottom: 150px;
-}
+} */
+
+
 
 /*media query breakpoint - sensor screen*/
 @media (pointer:coarse) {
 
-    .btn-block {
+    /* .btn-block {
         display: block;
         width: 100%;
-    }
+    } */
 
-    .interface {
-        width: 100%;
-    }
-
-    .field_wrapper {
-        width: 100%;
+    .cell {
+        /* ширина экрана поделить на количество ячеек в ширину */
+        width: calc(100vmin / 25);
+        height: calc(100vmin / 25);
     }
 }
 
-.btn-block > div {
+/* .btn-block > div {
     display: inline-block;
     overflow: hidden;
     margin: 5px;
@@ -215,4 +209,4 @@
 
 .btn-right {
     width: 20%;
-}
+} */
