@@ -7,7 +7,7 @@
 .main {
     display: flex;
     justify-content: center;
-    height: 100vh;
+    min-height: 100vh;
     
     /* Звездное небо на фоне  - ЗАМЕНИТЬ JS МОДУЛЕМ*/
     background-color:black;
@@ -60,6 +60,7 @@
 
 .line {
     display: flex;
+    justify-content: center
 }
 
 .cell {
@@ -172,8 +173,8 @@
 
     .cell {
         /* ширина экрана поделить на количество ячеек в ширину */
-        width: calc(100vmin / 25);
-        height: calc(100vmin / 25);
+        width: calc(90vmin / 25);
+        height: calc(90vmin / 25);
     }
 }
 
