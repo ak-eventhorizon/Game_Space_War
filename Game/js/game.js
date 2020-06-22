@@ -1,5 +1,5 @@
-var FIELD_WIDTH = 25; // ширина поля 25x20px = 500px
-var FIELD_HEIGHT = 32; // высота поля 32x20px = 640px
+var FIELD_WIDTH = 25; // ширина поля 25 клеток
+var FIELD_HEIGHT = 32; // высота поля 32 клетки
 
 var MAX_LEVEL = 10; //всего уровней, для проверки на выигрыш
 
