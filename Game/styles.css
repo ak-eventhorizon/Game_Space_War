@@ -72,6 +72,9 @@
 
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+
+    /* prevent double tap zoom in mobile browsers */
+    touch-action: manipulation;
 }
 
 .line {
