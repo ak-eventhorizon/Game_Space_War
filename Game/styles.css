@@ -5,7 +5,7 @@
 }
 
 
-#stars_bg {
+#stars-bg {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -19,6 +19,10 @@
     display: flex;
     justify-content: center;
     min-height: 100vh;
+}
+
+.main .wrapper {
+    position: relative;
 }
 
 .interface {
@@ -57,6 +61,17 @@
 .interface .button:active {
     box-shadow: 1px 1px 2px #a4a4a4;
     transform: translate(1px, 1px);
+}
+
+.controls {
+    width: 100%;
+    height: calc(100vmin - 40px);
+    position: absolute;
+    bottom: 0;
+    z-index: 2;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 
 .line {
@@ -148,29 +163,8 @@
 
 
 
-/* Блок кнопок для управления с мобильных устройств */
-
-/* .btn-block {
-    display: none;
-	max-width: 600px;
-    margin: auto;
-    text-align: center;
-    
-    /* прижатие кнопок к низу  * /
-    position: absolute;
-    bottom: 0;
-    margin-bottom: 150px;
-} */
-
-
-
 /*media query breakpoint - sensor screen*/
 @media (pointer:coarse) {
-
-    /* .btn-block {
-        display: block;
-        width: 100%;
-    } */
 
     .cell {
         /* ширина экрана поделить на количество ячеек в ширину */
@@ -178,37 +172,3 @@
         height: calc(90vmin / 25);
     }
 }
-
-/* .btn-block > div {
-    display: inline-block;
-    overflow: hidden;
-    margin: 5px;
-    cursor: pointer;
-    text-decoration: none;
-    border-radius: 25px;
-    
-    background-color: lightgray;
-    box-shadow: 3px 3px 2px #a4a4a4;
-    text-shadow: 1px 1px 2px #a4a4a4;
-
-    font: 40px bold arial, sans-serif;
-    color: black;
-    line-height: 200px;
-}
-
-.btn-block > div:active {
-    box-shadow: 2px 2px 2px #a4a4a4;
-    transform: translate(1px, 1px);
-}
-
-.btn-left {
-    width: 20%;
-}
-
-.btn-space {
-    width: 45%;
-}
-
-.btn-right {
-    width: 20%;
-} */
