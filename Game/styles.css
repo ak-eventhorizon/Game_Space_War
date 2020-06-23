@@ -4,6 +4,11 @@
     box-sizing: border-box;
 }
 
+body {
+    /* prevent double tap zoom in mobile browsers */
+    touch-action: manipulation;
+}
+
 
 #stars-bg {
 	position: fixed;
@@ -72,9 +77,6 @@
 
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-
-    /* prevent double tap zoom in mobile browsers */
-    touch-action: manipulation;
 }
 
 .line {
