@@ -74,18 +74,6 @@
     grid-template-columns: 1fr 1fr 1fr;
 }
 
-#btn-left {
-
-}
-
-#btn-space {
-
-}
-
-#btn-right{
-
-}
-
 .line {
     display: flex;
     justify-content: center

@@ -43,7 +43,19 @@ var interface = {
         button.className = 'button newGame';
         button.innerHTML = 'New Game';
         interface.appendChild(button);
-        
+
+        // добавление кнопок для управления на сенсорных экранах
+        let controls = document.querySelector('.controls');
+        controls.innerHTML = ''; //очистка содержимого блока
+        let controlLeft = document.createElement('div');
+        let controlSpace = document.createElement('div');
+        let controlRight = document.createElement('div');
+        controlLeft.id = 'btn-left';
+        controlSpace.id = 'btn-space';
+        controlRight.id = 'btn-right';
+        controls.appendChild(controlLeft);
+        controls.appendChild(controlSpace);
+        controls.appendChild(controlRight); 
     },
     
     //--OK перегенерация значения поля level по параметру x
@@ -764,7 +776,7 @@ var game = {
 
 function controlSensor(key){
 
-    switch (key.srcElement.className) {
+    switch (key.srcElement.id) {
         case 'btn-left': // Сенсорная кнопка влево
             ship.moveLeft();
             break;
