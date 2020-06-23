@@ -84,4 +84,4 @@ function refreshCanvas() {
 
 
 
-createStarsBackground('stars_bg', 1400, 14);
+createStarsBackground('stars-bg', 1400, 14);
