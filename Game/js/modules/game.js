@@ -1,48 +1,51 @@
-var FIELD_WIDTH = 25; // ширина поля 25 клеток
-var FIELD_HEIGHT = 32; // высота поля 32 клетки
+'use strict';
 
-var MAX_LEVEL = 10; //всего уровней, для проверки на выигрыш
+import { level } from "./levels.js";
 
-var SCORE_VALUE; // значение поля интерфейса score
-var LEVEL_VALUE; // значение поля интерфейса level
-var RETRY; // количество повторов в случае проигрыша
+const FIELD_WIDTH = 25; // ширина поля 25 клеток
+const FIELD_HEIGHT = 32; // высота поля 32 клетки
 
-var BULLET_SPEED = 50; // интервал времени перемещения пули
-var Z_SPEED = 1000; // интервал времени перемещения зерга
-var ZBULLET_SPEED = 200; // интервал времени перемещения пули зергов
+const MAX_LEVEL = 10; //всего уровней, для проверки на выигрыш
 
-var ZBULLETS = 1; //количество выстрелов в залпе зерга
+const BULLET_SPEED = 50; // интервал времени перемещения пули
+const Z_SPEED = 1000; // интервал времени перемещения зерга
+const ZBULLET_SPEED = 200; // интервал времени перемещения пули зергов
+const ZBULLETS = 1; //количество выстрелов в залпе зерга
 
-var ZCOUNTER = 0; // для реализации траектории зерга
-var ZDIRECTION = 'right'; //для реализации траектории зерга
+let scoreValue; // значение поля интерфейса score
+let levelValue; // значение поля интерфейса level
+let retry; // количество повторов в случае проигрыша
 
-var I1; //переменная для сохранения интервала bullet
-var I2; //переменная для сохранения интервала zbullet
-var I3; //переменная для сохранения интервала trajectory
+let zCounter = 0; // для реализации траектории зерга
+let zDirection = 'right'; //для реализации траектории зерга
+
+let I1; //переменная для сохранения интервала bullet
+let I2; //переменная для сохранения интервала zbullet
+let I3; //переменная для сохранения интервала trajectory
 
 
 //--OK методы объекта гененируют различные части интерфейса
-var interface = {
+let ui = {
     
     //--OK первоначальная генерация всего интерфейса
     generateCore: function(){
-        let interface = document.querySelector('.interface');
-        interface.innerHTML = ''; //очистка содержимого блока
+        let ui = document.querySelector('.interface');
+        ui.innerHTML = ''; //очистка содержимого блока
 
         let level = document.createElement('div');
         level.className = 'level';
-        level.innerHTML = '<div class="text">Level:</div><div class="value">'+LEVEL_VALUE+'</div>';
-        interface.appendChild(level);
+        level.innerHTML = '<div class="text">Level:</div><div class="value">'+levelValue+'</div>';
+        ui.appendChild(level);
         
         let score = document.createElement('div');
         score.className = 'score';
-        score.innerHTML = '<div class="text">Score:</div><div class="value">'+SCORE_VALUE+'</div>';
-        interface.appendChild(score);
+        score.innerHTML = '<div class="text">Score:</div><div class="value">'+scoreValue+'</div>';
+        ui.appendChild(score);
         
         let button = document.createElement('div');
         button.className = 'button newGame';
         button.innerHTML = 'New Game';
-        interface.appendChild(button);
+        ui.appendChild(button);
 
         // добавление кнопок для управления на сенсорных экранах
         let controls = document.querySelector('.controls');
@@ -69,7 +72,7 @@ var interface = {
     generateScore: function(){
         let score = document.querySelector('.score');
         score.innerHTML = '';
-        score.innerHTML = '<div class="text">Score:</div><div class="value">'+SCORE_VALUE+'</div>';
+        score.innerHTML = '<div class="text">Score:</div><div class="value">'+scoreValue+'</div>';
     },
     
     //--OK перегенерация кнопки New Game
@@ -82,7 +85,7 @@ var interface = {
         
         button.onclick = function(){
             game.new();
-        }
+        };
     },
     
     //--OK перегенерация кнопки Pause
@@ -95,8 +98,8 @@ var interface = {
         
         button.onclick = function(){
             game.pause();
-            interface.generateButtonUnPause();
-        }
+            ui.generateButtonUnPause();
+        };
     },
     
     //--OK перегенерация кнопки UnPause
@@ -109,8 +112,8 @@ var interface = {
         
         button.onclick = function(){
             game.unPause();
-            interface.generateButtonPause();
-        }
+            ui.generateButtonPause();
+        };
     },
     
     //--OK перегенерация кнопки Next level
@@ -123,7 +126,7 @@ var interface = {
         
         button.onclick = function(){
             game.nextLevel();
-        }
+        };
     },
     
     //--OK перегенерация кнопки Retry
@@ -132,16 +135,16 @@ var interface = {
         button.className = '';
         button.innerHTML = '';
         button.className = 'button retry';
-        button.innerHTML = 'Retry ('+RETRY+')';
+        button.innerHTML = 'Retry ('+retry+')';
         
         button.onclick = function(){
             game.retry();
-        }
+        };
     }
-}
+};
 
 //--OK генерация игрового поля
-var field = {
+let field = {
     
     //--OK генерация игрового поля с очисткой содержимого
     generate: function(width,height){
@@ -162,10 +165,10 @@ var field = {
             }
         }
     }
-}
+};
 
 //--OK якорь - центральная точка для отрисовки корабля и его перемещения
-var anchor = {
+let anchor = {
     
     //--OK установка начальной позиции якоря
     toggleDefault: function(){
@@ -217,10 +220,10 @@ var anchor = {
             anchorRight.classList.toggle('anchor');
         } 
     }
-}
+};
 
 //--OK корабль
-var ship = {
+let ship = {
     
     //--OK отрисовка или удаление корабля от якоря
     drawOrErase: function(){
@@ -229,21 +232,27 @@ var ship = {
         let x = +coordAnchor[0];
         let y = +coordAnchor[1];
         
-//10 блоков для возможности различной отрисовки частей корабля
+        //10 блоков для возможности различной отрисовки частей корабля (1 и 3 не используются)
         
-//                  10
-//                 7 8 9
-//                 4 5 6
-//                 1 2 3
+        //                  10
+        //                 7 8 9
+        //                 4 5 6
+        //                 1 2 3
         
         let block1 = document.getElementById(''+(x-1)+'-'+y+'');
+        block1.classList.toggle('empty'); // откл
+        block1.classList.toggle('ship'); // вкл
+        block1.classList.toggle('block1'); // вкл
         
         let block2 = document.getElementById(''+x+'-'+y+'');
-        block2.classList.toggle('empty'); // откл
-        block2.classList.toggle('ship'); // вкл
-        block2.classList.toggle('block2'); // вкл
+        block2.classList.toggle('empty');
+        block2.classList.toggle('ship'); 
+        block2.classList.toggle('block2');
         
         let block3 = document.getElementById(''+(x+1)+'-'+y+'');
+        block3.classList.toggle('empty');
+        block3.classList.toggle('ship');
+        block3.classList.toggle('block3');
         
         let block4 = document.getElementById(''+(x-1)+'-'+(y-1)+'');
         block4.classList.toggle('empty');
@@ -309,17 +318,17 @@ var ship = {
     checkImpact: function(){
         let shipArr = document.querySelectorAll('.ship');
         
-        for (i = (shipArr.length-1); i >= 0; i--){
+        for (let i = (shipArr.length-1); i >= 0; i--){
             if((shipArr[i].classList.contains('zerg')) ||
               (shipArr[i].classList.contains('zbullet'))){
                 game.over();
-               }
+            }
         }
     }
-}
+};
 
 //--OK пуля корабля
-var bullet = {
+let bullet = {
     
     //--OK создание пули
     generate: function(){
@@ -405,8 +414,8 @@ var bullet = {
                 }
                 
                 //увеличение счета за попадание
-                SCORE_VALUE++;
-                interface.generateScore();    
+                scoreValue++;
+                ui.generateScore();    
             } 
             //следующий блок имеет класс zbullet
             else if (nextBlock.classList.contains('zbullet')){
@@ -417,10 +426,10 @@ var bullet = {
             }        
         }
     }
-}
+};
 
 //--OK зерг
-var zerg = {
+let zerg = {
     
     //--OK - начальная генерация зерга на поле
     // параметр вида level.l_1
@@ -441,7 +450,7 @@ var zerg = {
         //выбираются все блоки зерга и передвигаюся вправо по одному начиная с последнего
         let zArr = document.querySelectorAll('.zerg');
         
-        for (i = (zArr.length-1); i >= 0; i--){
+        for (let i = (zArr.length-1); i >= 0; i--){
             let currentCell = zArr[i];
             let arrID = zArr[i].id.split('-');
             let x = +arrID[0];
@@ -468,7 +477,7 @@ var zerg = {
         //выбираются все блоки зерга и передвигаюся влево по одному начиная с первого
         let zArr = document.querySelectorAll('.zerg');
         
-        for (i = 0; i <= (zArr.length-1); i++){
+        for (let i = 0; i <= (zArr.length-1); i++){
             let currentCell = zArr[i];
             let arrID = zArr[i].id.split('-');
             let x = +arrID[0];
@@ -495,7 +504,7 @@ var zerg = {
         //выбираются все блоки зерга и передвигаюся вниз по одному начиная с последнего
         let zArr = document.querySelectorAll('.zerg');
         
-        for (i = (zArr.length-1); i >= 0; i--){
+        for (let i = (zArr.length-1); i >= 0; i--){
             let currentCell = zArr[i];
             let arrID = zArr[i].id.split('-');
             let x = +arrID[0];
@@ -529,38 +538,38 @@ var zerg = {
     //--OK реализация траектории движения зерга
     trajectory: function() {
         
-        if (ZDIRECTION==='right' && ZCOUNTER===3){
+        if (zDirection==='right' && zCounter===3){
             zerg.moveDown();
             zerg.fire(ZBULLETS);
-            ZDIRECTION = 'left';
+            zDirection = 'left';
         }
         
-        else if (ZDIRECTION==='left' && ZCOUNTER===-3){
+        else if (zDirection==='left' && zCounter===-3){
             zerg.moveDown();
             zerg.fire(ZBULLETS);
-            ZDIRECTION = 'right';
+            zDirection = 'right';
         }
         
-        else if (ZDIRECTION==='right'){
+        else if (zDirection==='right'){
             zerg.moveRight();
             zerg.fire(ZBULLETS);
-            ZCOUNTER++;
+            zCounter++;
         }
         
-        else if (ZDIRECTION==='left'){
+        else if (zDirection==='left'){
             zerg.moveLeft();
             zerg.fire(ZBULLETS);
-            ZCOUNTER--;
+            zCounter--;
         }
     }  
-}
+};
 
 //--OK пуля зерга
-var zbullet = {
+let zbullet = {
     
     //--OK создание пули
     // пуля должна генериться после каждого смещения зерга
-    // в качестве параметра можно задать число 1-2-3-4-5 - количество пуль в залпе (по умолчанию 1 пуля в залпе)
+    // в качестве параметра можно задать число 1-2-3-4-5 - количество пуль в залпе (по умолчанию: 1)
     generate: function(n=1){
         
         for (n; n>0; n--){
@@ -635,42 +644,41 @@ var zbullet = {
             }
         }
     }
-}
+};
 
 //--OK события игры
-var game = {
+let game = {
     
     //--OK - начальная заставка
     welcome: function() {
         game.pause();
         
-        SCORE_VALUE = 0;
-        LEVEL_VALUE = 0;
+        scoreValue = 0;
+        levelValue = 0;
         
-        interface.generateCore();
-        interface.generateButtonNewGame();
+        ui.generateCore();
+        ui.generateButtonNewGame();
         field.generate(FIELD_WIDTH,FIELD_HEIGHT);
-        zerg.generate(level.game_new);
+        zerg.generate(level.gameNew);
     },
     
     //--OK - запуск игры с экрана начальной заставки или экрана game over (кнопка New Game)
     new: function() {
-        SCORE_VALUE = 0;
-        LEVEL_VALUE = 1;
-        RETRY = 3;
-        ZCOUNTER = 0;
-        ZDIRECTION = 'right';
+        scoreValue = 0;
+        levelValue = 1;
+        retry = 3;
+        zCounter = 0;
+        zDirection = 'right';
         
-        interface.generateScore();
-        interface.generateLevel(LEVEL_VALUE);
-        interface.generateButtonPause();
+        ui.generateScore();
+        ui.generateLevel(levelValue);
+        ui.generateButtonPause();
         field.generate(FIELD_WIDTH,FIELD_HEIGHT);
         anchor.toggleDefault();
         ship.drawOrErase();
-        zerg.generate(level['l_'+LEVEL_VALUE]);
+        zerg.generate(level['l_'+levelValue]);
         
-        game.unPause();
-        
+        game.unPause();  
     },
     
     //--OK - пауза игры с сохранением прогресса
@@ -695,61 +703,60 @@ var game = {
     
     //--OK - запуск следующего уровня
     nextLevel: function() {
-        LEVEL_VALUE++;
-        ZCOUNTER = 0;
-        ZDIRECTION = 'right';
+        levelValue++;
+        zCounter = 0;
+        zDirection = 'right';
         
-        interface.generateButtonPause();
-        interface.generateLevel(LEVEL_VALUE);
+        ui.generateButtonPause();
+        ui.generateLevel(levelValue);
         field.generate(FIELD_WIDTH,FIELD_HEIGHT);
         anchor.toggleDefault();
         ship.drawOrErase();
-        zerg.generate(level['l_'+LEVEL_VALUE]);
+        zerg.generate(level['l_'+levelValue]);
         
         game.unPause();
-        
     },
     
     //--OK - запуск текущего уровня заново
     retry: function(){
-        ZCOUNTER = 0;
-        ZDIRECTION = 'right';
+        zCounter = 0;
+        zDirection = 'right';
         
-        interface.generateButtonPause();
-        interface.generateLevel(LEVEL_VALUE);
+        ui.generateButtonPause();
+        ui.generateLevel(levelValue);
         field.generate(FIELD_WIDTH,FIELD_HEIGHT);
         anchor.toggleDefault();
         ship.drawOrErase();
-        zerg.generate(level['l_'+LEVEL_VALUE]);
+        zerg.generate(level['l_'+levelValue]);
         
         game.unPause();
     },
     
     //--OK - заставка game_over если попыток больше нет или game_retry если попытки еще есть
     over: function() {
-        if (RETRY > 0){
+        if (retry > 0){
             game.pause();
-            interface.generateButtonRetry();
+            ui.generateButtonRetry();
             field.generate(FIELD_WIDTH,FIELD_HEIGHT);
-            zerg.generate(level.game_retry);
-            RETRY--;
+            zerg.generate(level.gameRetry);
+            retry--;
         }
         else{
             game.pause();
-            interface.generateButtonNewGame();
+            ui.generateButtonNewGame();
             field.generate(FIELD_WIDTH,FIELD_HEIGHT);
-            zerg.generate(level.game_over);
+            zerg.generate(level.gameOver);
         } 
     },
     
     //--OK - победа в текущем уровне или в игре, если уровень последний
     win: function() {
         
-        if (LEVEL_VALUE < MAX_LEVEL){
+        if (levelValue < MAX_LEVEL){
             game.winLevel();
             }
         
-        else if (LEVEL_VALUE === MAX_LEVEL){
+        else if (levelValue === MAX_LEVEL){
             game.winGame();
             }
     },
@@ -757,20 +764,19 @@ var game = {
     //--OK - если уровень не последний
     winLevel: function(){
         game.pause();
-        interface.generateButtonNextLevel();
+        ui.generateButtonNextLevel();
         field.generate(FIELD_WIDTH,FIELD_HEIGHT);
-        zerg.generate(level.level_win);
+        zerg.generate(level.levelWin);
     },
     
     //--OK - если уровень последний
     winGame: function(){
         game.pause();
-        interface.generateButtonNewGame();
+        ui.generateButtonNewGame();
         field.generate(FIELD_WIDTH,FIELD_HEIGHT);
-        zerg.generate(level.game_win);
+        zerg.generate(level.gameWin);
     }
-}
-
+};
 
 //--OK реакция на нажатие сенсорных кнопок
 
@@ -805,6 +811,4 @@ function controls(key) {
     }
 }
 
-
-//запуск игры
-game.welcome();
+export { game };
