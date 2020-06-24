@@ -3,7 +3,7 @@
 	"curly": true,
 	"eqeqeq": true,
 	"esversion": 6,
-	"maxlen": 80,
+	"maxlen": 100,
 	"undef": true,
 	"unused": true,
 	"strict": true,
