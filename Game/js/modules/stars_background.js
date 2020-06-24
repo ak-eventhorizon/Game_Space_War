@@ -84,4 +84,4 @@ function refreshCanvas() {
 
 
 
-createStarsBackground('stars-bg', 1400, 14);
+export { createStarsBackground };

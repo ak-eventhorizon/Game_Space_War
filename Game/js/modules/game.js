@@ -778,7 +778,6 @@ let game = {
     }
 };
 
-
 //--OK реакция на нажатие сенсорных кнопок
 
 function controlSensor(key){
@@ -812,6 +811,4 @@ function controls(key) {
     }
 }
 
-
-//запуск игры
-game.welcome();
+export { game };
