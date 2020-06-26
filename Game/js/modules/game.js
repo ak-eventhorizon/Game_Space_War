@@ -32,15 +32,15 @@ let ui = {
         let ui = document.querySelector('.interface');
         ui.innerHTML = ''; //очистка содержимого блока
 
-        let level = document.createElement('div');
-        level.className = 'level';
-        level.innerHTML = '<div class="text">Level:</div><div class="value">'+levelValue+'</div>';
-        ui.appendChild(level);
-        
         let score = document.createElement('div');
         score.className = 'score';
         score.innerHTML = '<div class="text">Score:</div><div class="value">'+scoreValue+'</div>';
         ui.appendChild(score);
+
+        let level = document.createElement('div');
+        level.className = 'level';
+        level.innerHTML = '<div class="text">Level:</div><div class="value">'+levelValue+'</div>';
+        ui.appendChild(level);
         
         let button = document.createElement('div');
         button.className = 'button newGame';
