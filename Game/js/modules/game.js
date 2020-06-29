@@ -14,7 +14,7 @@ const ZBULLETS = 1; //количество выстрелов в залпе зе
 
 let scoreValue; // значение поля интерфейса score
 let levelValue; // значение поля интерфейса level
-let retry; // количество повторов в случае проигрыша
+let retry = 4; // количество повторов в случае проигрыша
 
 let zCounter = 0; // для реализации траектории зерга
 let zDirection = 'right'; //для реализации траектории зерга
@@ -39,7 +39,9 @@ let ui = {
 
         let lives = document.createElement('div');
         lives.className = `lives`;
-        lives.innerHTML = `*****`;
+        for (let i = 0; i <= retry; i++) {
+            lives.innerHTML += `<div class="live"></div>`;    
+        }
         ui.appendChild(lives);
 
         let level = document.createElement('div');
@@ -77,7 +79,9 @@ let ui = {
     generateLives: function(){
         let lives = document.querySelector('.lives');
         lives.innerHTML = ``;
-        lives.innerHTML = `*****`;
+        for (let i = 0; i <= retry; i++) {
+            lives.innerHTML += `<div class="live"></div>`;    
+        }
     },
 
     //--OK перегенерация значения поля level по параметру x
@@ -147,7 +151,7 @@ let ui = {
         button.className = ``;
         button.innerHTML = ``;
         button.className = `button retry`;
-        button.innerHTML = `Retry ('+retry+')`;
+        button.innerHTML = `Retry`;
         
         button.onclick = function(){
             game.retry();
@@ -678,7 +682,7 @@ let game = {
     new: function() {
         scoreValue = 0;
         levelValue = 1;
-        retry = 3;
+        retry =4;
         zCounter = 0;
         zDirection = 'right';
         
@@ -748,15 +752,18 @@ let game = {
     //--OK - заставка game_over если попыток больше нет или game_retry если попытки еще есть
     over: function() {
         if (retry > 0){
+            retry--;
             game.pause();
             ui.generateButtonRetry();
+            ui.generateLives();
             field.generate(FIELD_WIDTH,FIELD_HEIGHT);
             zerg.generate(level.gameRetry);
-            retry--;
         }
         else{
+            retry--; // value will be -1
             game.pause();
             ui.generateButtonNewGame();
+            ui.generateLives();
             field.generate(FIELD_WIDTH,FIELD_HEIGHT);
             zerg.generate(level.gameOver);
         } 

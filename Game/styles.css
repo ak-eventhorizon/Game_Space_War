@@ -45,18 +45,26 @@ body {
 
 .interface .score {
     color: #097dad;
+    text-align: center;
 }
 
 .interface .lives {
-    display: flex;
-    justify-content: space-evenly;
-    color: #12c712;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 1px;
+    height: inherit;
+}
+
+.interface .lives .live {
+    background-image: url('./img/icons/heart.svg');
+	background-repeat: no-repeat;
+    background-position: center;
 }
 
 .interface .level {
     display: flex;
     justify-content: space-evenly;
-    color: #ef243d;
+    color: #66af66;
 }
 
 .interface .button {
