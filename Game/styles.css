@@ -34,24 +34,37 @@ body {
     height: 40px;
 
     display: grid;
-    grid-template-columns: 1fr 1fr 1.3fr;
+    grid-template-columns: 1fr 1fr 1fr 2fr;
     grid-gap: 5px;
 
     align-items: center;
     font-size: 25px;
     font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.interface .score {
+    color: #097dad;
+    text-align: center;
+}
+
+.interface .lives {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 1px;
+    height: inherit;
+}
+
+.interface .lives .live {
+    background-image: url('./img/icons/heart.svg');
+	background-repeat: no-repeat;
+    background-position: center;
 }
 
 .interface .level {
     display: flex;
     justify-content: space-evenly;
-    color: lightgray;
-}
-
-.interface .score {
-    display: flex;
-    justify-content: space-evenly;
-    color: lightgray;
+    color: #66af66;
 }
 
 .interface .button {
@@ -60,7 +73,6 @@ body {
     cursor: pointer;
     background-color: lightgrey;
     box-shadow: 2px 2px 2px #a4a4a4;
-    text-shadow: 1px 1px 2px #a4a4a4;
 }
 
 .interface .button:active {
