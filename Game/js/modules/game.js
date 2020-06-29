@@ -30,26 +30,31 @@ let ui = {
     //--OK первоначальная генерация всего интерфейса
     generateCore: function(){
         let ui = document.querySelector('.interface');
-        ui.innerHTML = ''; //очистка содержимого блока
+        ui.innerHTML = ``; //очистка содержимого блока
 
         let score = document.createElement('div');
-        score.className = 'score';
-        score.innerHTML = '<div class="text">Score:</div><div class="value">'+scoreValue+'</div>';
+        score.className = `score`;
+        score.innerHTML = `${scoreValue}`;
         ui.appendChild(score);
 
+        let lives = document.createElement('div');
+        lives.className = `lives`;
+        lives.innerHTML = `*****`;
+        ui.appendChild(lives);
+
         let level = document.createElement('div');
-        level.className = 'level';
-        level.innerHTML = '<div class="text">Level:</div><div class="value">'+levelValue+'</div>';
+        level.className = `level`;
+        level.innerHTML = `- ${levelValue} -`;
         ui.appendChild(level);
         
         let button = document.createElement('div');
-        button.className = 'button newGame';
-        button.innerHTML = 'New Game';
+        button.className = `button newGame`;
+        button.innerHTML = `Start`;
         ui.appendChild(button);
 
         // добавление кнопок для управления на сенсорных экранах
         let controls = document.querySelector('.controls');
-        controls.innerHTML = ''; //очистка содержимого блока
+        controls.innerHTML = ``; //очистка содержимого блока
         let controlLeft = document.createElement('div');
         let controlSpace = document.createElement('div');
         let controlRight = document.createElement('div');
@@ -61,27 +66,34 @@ let ui = {
         controls.appendChild(controlRight); 
     },
     
-    //--OK перегенерация значения поля level по параметру x
-    generateLevel: function(x){
-        let level = document.querySelector('.level');
-        level.innerHTML = '';
-        level.innerHTML = '<div class="text">Level:</div><div class="value">'+x+'</div>';
-    },
-    
     //--OK перегенерация значения поля score
     generateScore: function(){
         let score = document.querySelector('.score');
-        score.innerHTML = '';
-        score.innerHTML = '<div class="text">Score:</div><div class="value">'+scoreValue+'</div>';
+        score.innerHTML = ``;
+        score.innerHTML = `${scoreValue}`;
+    },
+
+    //--OK перегенерация значения поля lives
+    generateLives: function(){
+        let lives = document.querySelector('.lives');
+        lives.innerHTML = ``;
+        lives.innerHTML = `*****`;
+    },
+
+    //--OK перегенерация значения поля level по параметру x
+    generateLevel: function(x){
+        let level = document.querySelector('.level');
+        level.innerHTML = ``;
+        level.innerHTML = `- ${x} -`;
     },
     
-    //--OK перегенерация кнопки New Game
+    //--OK перегенерация кнопки Start
     generateButtonNewGame: function(){
         let button = document.querySelector('.button');
-        button.className = '';
-        button.innerHTML = '';
-        button.className = 'button newGame';
-        button.innerHTML = 'New Game';
+        button.className = ``;
+        button.innerHTML = ``;
+        button.className = `button newGame`;
+        button.innerHTML = `Start`;
         
         button.onclick = function(){
             game.new();
@@ -91,10 +103,10 @@ let ui = {
     //--OK перегенерация кнопки Pause
     generateButtonPause: function(){
         let button = document.querySelector('.button');
-        button.className = '';
-        button.innerHTML = '';
-        button.className = 'button pause';
-        button.innerHTML = 'Pause';
+        button.className = ``;
+        button.innerHTML = ``;
+        button.className = `button pause`;
+        button.innerHTML = `Pause`;
         
         button.onclick = function(){
             game.pause();
@@ -105,10 +117,10 @@ let ui = {
     //--OK перегенерация кнопки UnPause
     generateButtonUnPause: function(){
         let button = document.querySelector('.button');
-        button.className = '';
-        button.innerHTML = '';
-        button.className = 'button unpause';
-        button.innerHTML = 'UnPause';
+        button.className = ``;
+        button.innerHTML = ``;
+        button.className = `button unpause`;
+        button.innerHTML = `UnPause`;
         
         button.onclick = function(){
             game.unPause();
@@ -119,10 +131,10 @@ let ui = {
     //--OK перегенерация кнопки Next level
     generateButtonNextLevel: function(){
         let button = document.querySelector('.button');
-        button.className = '';
-        button.innerHTML = '';
-        button.className = 'button nextlevel';
-        button.innerHTML = 'Next level';
+        button.className = ``;
+        button.innerHTML = ``;
+        button.className = `button nextlevel`;
+        button.innerHTML = `Next`;
         
         button.onclick = function(){
             game.nextLevel();
@@ -132,10 +144,10 @@ let ui = {
     //--OK перегенерация кнопки Retry
     generateButtonRetry: function(){
         let button = document.querySelector('.button');
-        button.className = '';
-        button.innerHTML = '';
-        button.className = 'button retry';
-        button.innerHTML = 'Retry ('+retry+')';
+        button.className = ``;
+        button.innerHTML = ``;
+        button.className = `button retry`;
+        button.innerHTML = `Retry ('+retry+')`;
         
         button.onclick = function(){
             game.retry();
@@ -662,7 +674,7 @@ let game = {
         zerg.generate(level.gameNew);
     },
     
-    //--OK - запуск игры с экрана начальной заставки или экрана game over (кнопка New Game)
+    //--OK - запуск игры с экрана начальной заставки или экрана game over (кнопка Start)
     new: function() {
         scoreValue = 0;
         levelValue = 1;
@@ -671,6 +683,7 @@ let game = {
         zDirection = 'right';
         
         ui.generateScore();
+        ui.generateLives();
         ui.generateLevel(levelValue);
         ui.generateButtonPause();
         field.generate(FIELD_WIDTH,FIELD_HEIGHT);

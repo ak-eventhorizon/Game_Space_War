@@ -34,24 +34,29 @@ body {
     height: 40px;
 
     display: grid;
-    grid-template-columns: 1fr 1fr 1.3fr;
+    grid-template-columns: 1fr 1fr 1fr 2fr;
     grid-gap: 5px;
 
     align-items: center;
     font-size: 25px;
     font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.interface .score {
+    color: #097dad;
+}
+
+.interface .lives {
+    display: flex;
+    justify-content: space-evenly;
+    color: #12c712;
 }
 
 .interface .level {
     display: flex;
     justify-content: space-evenly;
-    color: lightgray;
-}
-
-.interface .score {
-    display: flex;
-    justify-content: space-evenly;
-    color: lightgray;
+    color: #ef243d;
 }
 
 .interface .button {
@@ -60,7 +65,6 @@ body {
     cursor: pointer;
     background-color: lightgrey;
     box-shadow: 2px 2px 2px #a4a4a4;
-    text-shadow: 1px 1px 2px #a4a4a4;
 }
 
 .interface .button:active {
